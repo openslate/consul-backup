@@ -38,6 +38,7 @@ AWS_KEYS=$(curl -sS --header "X-Vault-Token: ${APPROLE_TOKEN}" \
     ${VAULT_ADDR}/v1/${VAULT_AWS_AUTH_PATH}/creds/${AWS_IAM_POLICY})
 export ACCESS_KEY=$(echo $AWS_KEYS | jq -r '.data.access_key')
 export SECRET_KEY=$(echo $AWS_KEYS | jq -r '.data.secret_key')
+export STS_TOKEN=$(echo $AWS_KEYS | jq -r '.data.security_token')
 
 export GPG_PHRASE=$(curl -sS --header "X-Vault-Token: ${APPROLE_TOKEN}" \
     ${VAULT_ADDR}/v1/secret/infrastructure/${VAULT_LOGIN_ROLE} | \
