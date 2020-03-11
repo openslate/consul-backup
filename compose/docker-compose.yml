@@ -1,0 +1,14 @@
+version: '3.1'
+services:
+  app:
+    image: ${DOCKER_IMAGE}
+    build:
+      context: ..
+    environment:
+      - CONSUL_HTTP_ADDR
+      - GPG_PHRASE
+      - S3_BUCKET
+      - CONSUL_BOOTSTRAP_TOKEN
+      - REMOTE_FILE_PATH
+      - ACCESS_KEY
+      - SECRET_KEY
