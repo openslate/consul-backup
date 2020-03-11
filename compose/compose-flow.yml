@@ -1,0 +1,19 @@
+---
+profiles:
+  local:
+    - docker-compose.yml
+  test:
+    - docker-compose.yml
+  dev:
+    - docker-compose.yml
+  prod:
+    - docker-compose.yml
+
+rancher:
+  project: Ops
+  clusters:
+    test: staging
+
+tasks:
+  restore:
+    command: compose-flow compose run --rm app /restore.sh

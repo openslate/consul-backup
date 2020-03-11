@@ -41,8 +41,8 @@ export SECRET_KEY=$(echo $AWS_KEYS | jq -r '.data.secret_key')
 export STS_TOKEN=$(echo $AWS_KEYS | jq -r '.data.security_token')
 
 export GPG_PHRASE=$(curl -sS --header "X-Vault-Token: ${APPROLE_TOKEN}" \
-    ${VAULT_ADDR}/v1/secret/infrastructure/${VAULT_LOGIN_ROLE} | \
-    jq -r 'if .errors then . else .data.gpg_phrase end')
+    ${VAULT_ADDR}/v1/secret/data/infrastructure/${VAULT_LOGIN_ROLE} | \
+    jq -r 'if .errors then . else .data.data.gpg_phrase end')
 
 export CONSUL_HTTP_TOKEN=$(curl -sS --header "X-Vault-Token: ${APPROLE_TOKEN}" \
     ${VAULT_ADDR}/v1/consul/creds/management | \
