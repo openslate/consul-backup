@@ -1,9 +1,9 @@
 FROM alpine:latest
 
-ENV CONSUL_VERSION=1.5.0
+ENV CONSUL_VERSION=1.7.1
 
 RUN apk update
-RUn apk upgrade
+RUN apk upgrade
 RUN apk add bash py-pip py-setuptools curl gnupg jq
 RUN rm -rf /var/cache/apk/*
 
