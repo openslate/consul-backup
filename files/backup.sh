@@ -5,6 +5,7 @@ unset_vars() {
   unset CONSUL_HTTP_TOKEN
   unset ACCESS_KEY
   unset SECRET_KEY
+  unset STS_TOKEN
 }
 
 clean_environment(){
@@ -20,7 +21,7 @@ S3_BACKUP_DIR="$(date +"%Y")/$(date +"%m")/$(date +"%d")"
 # Define where and how to send events to influx
 POST2INFLUX="curl -XPOST --data-binary @- ${INFLUXDB_URL}"
 
-# Get CONSUL_HTTP_TOKEN, GPG_PHRASE, ACCESS_KEY and SECRET_KEY
+# Get CONSUL_HTTP_TOKEN, GPG_PHRASE, ACCESS_KEY, SECRET_KEY and STS_TOKEN
 source /environment.sh
 
 # Backup consul
@@ -37,6 +38,7 @@ consul snapshot inspect ${BACKUP_FILE} || { echo "instance_inspect_failed,instan
 
 # Push to S3
 echo -n "database_s3-put_started,instance=consul,database=consul_kv value=true" | ${POST2INFLUX}
+echo "Uploading to S3 with access key ${ACCESS_KEY}"
 s3cmd put  ${BACKUP_FILE} s3://${S3_BUCKET}/${S3_BACKUP_DIR}/${BACKUP_FILE} || { echo "instance_s3-put_failed,instance=consul value=true" | ${POST2INFLUX} && exit 1; }
 echo -n "database_s3-put_completed,instance=consul,database=consul_kv value=true" | ${POST2INFLUX}
 echo -n "instance_backup_completed,instance=consul value=true" | ${POST2INFLUX}

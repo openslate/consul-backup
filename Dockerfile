@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-ENV CONSUL_VERSION=1.0.6
+ENV CONSUL_VERSION=1.5.0
 
 RUN apk update
 RUn apk upgrade
